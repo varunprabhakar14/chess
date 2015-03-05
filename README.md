@@ -28,3 +28,25 @@ Your Board class should hold a 2-dimensional array (an array of arrays). Each po
 The Board class should have a method #in_check?(color) that returns whether a player is in check. You can implement this by (1) finding the position of the king on the board then (2) seeing if any of the opposing pieces can move to that position.
 
 The Board class should have a #move(start, end_pos) method. This should update the 2d grid and also the moved piece's position. You'll want to raise an exception if: (a) there is no piece at start or (b) the piece cannot move to end_pos.
+
+## Phase III: Piece#valid_moves
+
+You will want a method on Piece that filters out the #moves of a Piece that would leave the player in check. A good approach is to write a Piece#move_into_check?(pos) method that will:
+
+Duplicate the Board and perform the move.
+Look to see if the player is in check after the move (Board#in_check?).
+To do this, you'll have to write a Board#dup method. Your #dup method should duplicate not only the Board, but the pieces on the Board. Be aware: Ruby's #dup method does not call dup on the instance variables, so you may need to write your own Board#dup method that will dup the individual pieces as well.
+
+## Phase IV: Board#checkmate?(color)
+
+Write a #checkmate? method. If the player is in check, and if none of the player's pieces have any #valid_moves, then the player is in checkmate.
+
+## Phase V: Game
+
+Only when done with the basic Chess logic (moving, check, checkmate) should you begin writing user interaction code.
+
+Write a Game class that constructs a Board object, that alternates between players (assume two human players for now) prompting them to move. The Game should handle exceptions from Board#move and report them.
+
+It is fine to write a HumanPlayer class with one method (#play_turn). In that case, Game#play method just continuously calls play_turn.
+
+It is not a requirement to write a ComputerPlayer, but you may do this as a bonus. If you write your Game class cleanly, it should be relatively straightforward to add new player types at a later date.
